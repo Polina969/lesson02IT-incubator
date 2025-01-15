@@ -1,4 +1,3 @@
-import { DBType } from "../../db/db";
 import { dbBlogsType } from "../../db/dbBlogs";
 import { DBPostsType } from "../../db/dbPosts";
 
