@@ -1,5 +1,4 @@
 import express, { NextFunction, Request, Response } from "express";
-import { db } from "./db/db";
 import { BlogsRouter } from "./router/blogs";
 import { dbBlogs } from "./db/dbBlogs";
 
