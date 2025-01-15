@@ -1,0 +1,175 @@
+export type PostsType = {
+  id: string;
+  title: string;
+  shortDescription: string;
+  content: string;
+  blogId: string;
+  blogName: string;
+};
+
+export type DBPostsType = { posts: PostsType[] };
+
+export const dbPosts: DBPostsType = {
+  posts: [
+    {
+      id: "post-1",
+      title: "Post 1 Title",
+      shortDescription: "Short description for post 1",
+      content: "Content for post 1...",
+      blogId: "blog-1",
+      blogName: "Blog 1",
+    },
+    {
+      id: "post-2",
+      title: "Post 2 Title",
+      shortDescription: "Short description for post 2",
+      content: "Content for post 2...",
+      blogId: "blog-2",
+      blogName: "Blog 2",
+    },
+    {
+      id: "post-3",
+      title: "Post 3 Title",
+      shortDescription: "Short description for post 3",
+      content: "Content for post 3...",
+      blogId: "blog-3",
+      blogName: "Blog 3",
+    },
+    {
+      id: "post-4",
+      title: "Post 4 Title",
+      shortDescription: "Short description for post 4",
+      content: "Content for post 4...",
+      blogId: "blog-4",
+      blogName: "Blog 4",
+    },
+    {
+      id: "post-5",
+      title: "Post 5 Title",
+      shortDescription: "Short description for post 5",
+      content: "Content for post 5...",
+      blogId: "blog-5",
+      blogName: "Blog 5",
+    },
+    {
+      id: "post-6",
+      title: "Post 6 Title",
+      shortDescription: "Short description for post 6",
+      content: "Content for post 6...",
+      blogId: "blog-6",
+      blogName: "Blog 6",
+    },
+    {
+      id: "post-7",
+      title: "Post 7 Title",
+      shortDescription: "Short description for post 7",
+      content: "Content for post 7...",
+      blogId: "blog-7",
+      blogName: "Blog 7",
+    },
+    {
+      id: "post-8",
+      title: "Post 8 Title",
+      shortDescription: "Short description for post 8",
+      content: "Content for post 8...",
+      blogId: "blog-8",
+      blogName: "Blog 8",
+    },
+    {
+      id: "post-9",
+      title: "Post 9 Title",
+      shortDescription: "Short description for post 9",
+      content: "Content for post 9...",
+      blogId: "blog-9",
+      blogName: "Blog 9",
+    },
+    {
+      id: "post-10",
+      title: "Post 10 Title",
+      shortDescription: "Short description for post 10",
+      content: "Content for post 10...",
+      blogId: "blog-10",
+      blogName: "Blog 10",
+    },
+    {
+      id: "post-11",
+      title: "Post 11 Title",
+      shortDescription: "Short description for post 11",
+      content: "Content for post 11...",
+      blogId: "blog-11",
+      blogName: "Blog 11",
+    },
+    {
+      id: "post-12",
+      title: "Post 12 Title",
+      shortDescription: "Short description for post 12",
+      content: "Content for post 12...",
+      blogId: "blog-12",
+      blogName: "Blog 12",
+    },
+    {
+      id: "post-13",
+      title: "Post 13 Title",
+      shortDescription: "Short description for post 13",
+      content: "Content for post 13...",
+      blogId: "blog-13",
+      blogName: "Blog 13",
+    },
+    {
+      id: "post-14",
+      title: "Post 14 Title",
+      shortDescription: "Short description for post 14",
+      content: "Content for post 14...",
+      blogId: "blog-14",
+      blogName: "Blog 14",
+    },
+    {
+      id: "post-15",
+      title: "Post 15 Title",
+      shortDescription: "Short description for post 15",
+      content: "Content for post 15...",
+      blogId: "blog-15",
+      blogName: "Blog 15",
+    },
+    {
+      id: "post-16",
+      title: "Post 16 Title",
+      shortDescription: "Short description for post 16",
+      content: "Content for post 16...",
+      blogId: "blog-16",
+      blogName: "Blog 16",
+    },
+    {
+      id: "post-17",
+      title: "Post 17 Title",
+      shortDescription: "Short description for post 17",
+      content: "Content for post 17...",
+      blogId: "blog-17",
+      blogName: "Blog 17",
+    },
+    {
+      id: "post-18",
+      title: "Post 18 Title",
+      shortDescription: "Short description for post 18",
+      content: "Content for post 18...",
+      blogId: "blog-18",
+      blogName: "Blog 18",
+    },
+    {
+      id: "post-19",
+      title: "Post 19 Title",
+      shortDescription: "Short description for post 19",
+      content: "Content for post 19...",
+      blogId: "blog-19",
+      blogName: "Blog 19",
+    },
+    {
+      id: "post-20",
+      title: "Post 20 Title",
+      shortDescription: "Short description for post 20",
+      content: "Content for post 20...",
+      blogId: "blog-20",
+      blogName: "Blog 20",
+    },
+  ],
+};
