@@ -8,8 +8,9 @@ export const PORT = process.env.PORT || 2010;
 const jsonBodyMiddleware = express.json();
 app.use(jsonBodyMiddleware);
 
-app.use("/blogs", BlogsRouter(dbBlogs));
 app.use(VersionRouter());
+app.use("/blogs", BlogsRouter(dbBlogs));
+
 // app.use(authMiddleware); // Добавление мидлвера перед роутами
 // app.use(getVideoRouter(db));
 //ойй
