@@ -13,6 +13,7 @@ export const VersionRouter = () => {
   versionRouter.get("/", (req, res) => {
     // эндпоинт, который будет показывать на верселе какая версия бэкэнда сейчас залита
     res.status(200).json({ version: "1.0" });
+    return;
   });
   return versionRouter;
 };
