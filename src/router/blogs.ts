@@ -8,6 +8,15 @@ import { getBlogsByIDController } from "../repository/blogs/getBlogsByIDControll
 import { deleteBlogsByIDController } from "../repository/blogs/deleteBlogsByIDController";
 import { authMiddleware } from "../middlewares/middlewares";
 
+export const VersionRouter = () => {
+  const versionRouter = express.Router();
+  versionRouter.get("/", (req, res) => {
+    // эндпоинт, который будет показывать на верселе какая версия бэкэнда сейчас залита
+    res.status(200).json({ version: "1.0" });
+  });
+  return versionRouter;
+};
+
 export const BlogsRouter = (dbBlogs: dbBlogsType) => {
   const blogRouter = express.Router();
 
