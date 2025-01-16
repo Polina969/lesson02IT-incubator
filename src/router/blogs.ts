@@ -42,12 +42,6 @@ export const BlogsRouter = (dbBlogs: dbBlogsType) => {
     bodyShema,
     validateRequestSchema,
     (req: Request, res: Response): void => {
-      const videoIndex = dbBlogs.blogs.findIndex((v) => v.id === req.params.id);
-
-      if (videoIndex === -1) {
-        res.sendStatus(404); // 404, если видео с таким id не найдено
-        return;
-      }
       try {
         const createdBlog: BlogsType = postsBlogsController.createBlog(
           req.body.name,
@@ -67,6 +61,12 @@ export const BlogsRouter = (dbBlogs: dbBlogsType) => {
     bodyShema,
     validateRequestSchema,
     (req: Request, res: Response): void => {
+      const videoIndex = dbBlogs.blogs.findIndex((v) => v.id === req.params.id);
+
+      if (videoIndex === -1) {
+        res.sendStatus(404); // 404, если видео с таким id не найдено
+        return;
+      }
       const putCours = putBlogsByIDController.updateBlog(
         req.params.id,
         req.body.name,
