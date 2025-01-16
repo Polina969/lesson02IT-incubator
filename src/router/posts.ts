@@ -51,6 +51,12 @@ export const PostsRouter = (dbPosts: dbPostsType) => {
     postsShema,
     validateRequestSchema,
     (req: Request, res: Response): void => {
+      const videoIndex = dbPosts.posts.findIndex((v) => v.id === req.params.id);
+
+      if (videoIndex === -1) {
+        res.sendStatus(404); // 404, если видео с таким id не найдено
+        return;
+      }
       const putPost = putPostController.updatePost(
         req.params.id,
         req.body.title,
