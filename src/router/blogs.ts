@@ -7,6 +7,9 @@ import { getBlogsController } from "../repository/blogs/getBlogsControlleer";
 import { getBlogsByIDController } from "../repository/blogs/getBlogsByIDController";
 import { deleteBlogsByIDController } from "../repository/blogs/deleteBlogsByIDController";
 import { authMiddleware } from "../middlewares/middlewares";
+import { validationResult, ValidationError, body } from "express-validator";
+import { bodyShema } from "../shema/bodyShems";
+import { validateRequestSchema } from "../middlewares/valdate-request-shema";
 
 export const VersionRouter = () => {
   const versionRouter = express.Router();
@@ -34,29 +37,39 @@ export const BlogsRouter = (dbBlogs: dbBlogsType) => {
     }
   });
   blogRouter.use(authMiddleware);
-  blogRouter.post("/", (req: Request, res: Response) => {
-    try {
-      const createdBlog: BlogsType = postsBlogsController.createBlog(
+  blogRouter.post(
+    "/",
+    bodyShema,
+    validateRequestSchema,
+    (req: Request, res: Response) => {
+      try {
+        const createdBlog: BlogsType = postsBlogsController.createBlog(
+          req.body.name,
+          req.body.description,
+          req.body.websiteUrl
+        ); // импорт к репозиторию
+        res.status(HTTP_STATUSES.CREATED_201).json(createdBlog);
+      } catch (error: any) {
+        res
+          .status(HTTP_STATUSES.BAD_REQUEST_400)
+          .send({ message: error.message });
+      }
+    }
+  );
+  blogRouter.put(
+    "/:id",
+    bodyShema,
+    validateRequestSchema,
+    (req: Request, res: Response): void => {
+      const putCours = putBlogsByIDController.updateBlog(
+        req.params.id,
         req.body.name,
         req.body.description,
         req.body.websiteUrl
       ); // импорт к репозиторию
-      res.status(HTTP_STATUSES.CREATED_201).json(createdBlog);
-    } catch (error: any) {
-      res
-        .status(HTTP_STATUSES.BAD_REQUEST_400)
-        .send({ message: error.message });
+      res.status(HTTP_STATUSES.NO_CONTENT_204).json(putCours);
     }
-  });
-  blogRouter.put("/:id", (req: Request, res: Response): void => {
-    const putCours = putBlogsByIDController.updateBlog(
-      req.params.id,
-      req.body.name,
-      req.body.description,
-      req.body.websiteUrl
-    ); // импорт к репозиторию
-    res.status(HTTP_STATUSES.NO_CONTENT_204).json(putCours);
-  });
+  );
 
   blogRouter.delete("/:id", (req: Request, res: Response): void => {
     const status = deleteBlogsByIDController.deleteIDBlog(req.params.id);

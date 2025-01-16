@@ -7,6 +7,8 @@ import { getPostsByIDController } from "../repository/posts/getPostsByIDControll
 import { postPostsController } from "../repository/posts/postPostsController";
 import { putPostController } from "../repository/posts/putPostsByIDController";
 import { deletePostByIDController } from "../repository/posts/deletePostsByIDController";
+import { postsShema } from "../shema/putShems";
+import { validateRequestSchema } from "../middlewares/valdate-request-shema";
 
 export const PostsRouter = (dbPosts: dbPostsType) => {
   const postRouter = express.Router();
@@ -24,25 +26,40 @@ export const PostsRouter = (dbPosts: dbPostsType) => {
     }
   });
   postRouter.use(authMiddleware);
-  postRouter.post("/", (req: Request, res: Response) => {
-    try {
-      const createdPost: PostsType = postPostsController.createPost(
+  postRouter.post(
+    "/",
+    postsShema,
+    validateRequestSchema,
+    (req: Request, res: Response) => {
+      try {
+        const createdPost: PostsType = postPostsController.createPost(
+          req.body.title,
+          req.body.shortDescription,
+          req.body.content,
+          req.body.blogId
+        ); // импорт к репозиторию
+        res.status(HTTP_STATUSES.CREATED_201).json(createdPost);
+      } catch (error: any) {
+        res
+          .status(HTTP_STATUSES.BAD_REQUEST_400)
+          .send({ message: error.message });
+      }
+    }
+  );
+  postRouter.put(
+    "/:id",
+    postsShema,
+    validateRequestSchema,
+    (req: Request, res: Response): void => {
+      const putPost = putPostController.updatePost(
+        req.params.id,
         req.body.title,
         req.body.shortDescription,
-        req.body.content,
-        req.body.blogId
+        req.body.content
       ); // импорт к репозиторию
-      res.status(HTTP_STATUSES.CREATED_201).json(createdPost);
-    } catch (error: any) {
-      res
-        .status(HTTP_STATUSES.BAD_REQUEST_400)
-        .send({ message: error.message });
+      res.status(HTTP_STATUSES.NO_CONTENT_204).json(putPost);
     }
-  });
-  postRouter.put("/:id", (req: Request, res: Response): void => {
-    const putPost = putPostController.updatePost(req.params.id, req.body.name); // импорт к репозиторию
-    res.status(HTTP_STATUSES.NO_CONTENT_204).json(putPost);
-  });
+  );
 
   postRouter.delete("/:id", (req: Request, res: Response): void => {
     const status = deletePostByIDController.deleteIDPost(req.params.id);

@@ -5,9 +5,11 @@ import cors from "cors";
 import { deleteTestsRouter } from "./router/testing";
 import { PostsRouter } from "./router/posts";
 import { dbPosts } from "./db/dbPosts";
+import { config } from "dotenv";
+config(); // добавление переменных из файла .env в process.env
 
 export const app = express();
-export const PORT = 2010;
+export const PORT = process.env.PORT || 2010;
 const jsonBodyMiddleware = express.json();
 app.use(jsonBodyMiddleware);
 
