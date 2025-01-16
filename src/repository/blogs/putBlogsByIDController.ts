@@ -3,7 +3,7 @@ import { HTTP_STATUSES } from "../../utils";
 
 export const putBlogsByIDController = {
   updateBlog(
-    id: string,
+    id: string | number,
     name: string,
     description: string,
     websiteUrl: string

@@ -4,7 +4,7 @@ import { dbBlogs } from "../../db/dbBlogs";
 export const postsBlogsController = {
   createBlog(name: string, description: string, websiteUrl: string): BlogsType {
     const createdBlog = {
-      id: String(new Date()),
+      id: Number(new Date()),
       name: name,
       description: description,
       websiteUrl: websiteUrl,

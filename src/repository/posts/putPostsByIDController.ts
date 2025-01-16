@@ -3,7 +3,7 @@ import { HTTP_STATUSES } from "../../utils";
 
 export const putPostController = {
   updatePost(
-    id: string,
+    id: string | number,
     title: string,
     shortDescription: string,
     content: string
