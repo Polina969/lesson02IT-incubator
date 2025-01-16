@@ -1,4 +1,5 @@
 import { PostsType, dbPosts } from "../../db/dbPosts";
+import { v4 as uuidv4 } from "uuid";
 
 export const postPostsController = {
   createPost(
@@ -8,7 +9,7 @@ export const postPostsController = {
     blogId: string
   ): PostsType {
     const createdPost = {
-      id: String(new Date()),
+      id: uuidv4(),
       title: title,
       shortDescription: shortDescription,
       content: content,
