@@ -1,6 +1,6 @@
 import { PostsType, dbPosts } from "../../db/dbPosts";
 
-export const postsBlogController = {
+export const postPostsController = {
   createPost(
     title: string,
     shortDescription: string,

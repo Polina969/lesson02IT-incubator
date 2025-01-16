@@ -3,6 +3,8 @@ import { BlogsRouter, VersionRouter } from "./router/blogs";
 import { dbBlogs } from "./db/dbBlogs";
 import cors from "cors";
 import { deleteTestsRouter } from "./router/testing";
+import { PostsRouter } from "./router/posts";
+import { dbPosts } from "./db/dbPosts";
 
 export const app = express();
 export const PORT = 2010;
@@ -11,4 +13,5 @@ app.use(jsonBodyMiddleware);
 
 app.use(VersionRouter());
 app.use("/blogs", BlogsRouter(dbBlogs));
+app.use("/posts", PostsRouter(dbPosts));
 app.use(deleteTestsRouter());

@@ -1,8 +1,8 @@
 import { dbBlogsType } from "../../db/dbBlogs";
-import { DBPostsType } from "../../db/dbPosts";
+import { dbPostsType } from "../../db/dbPosts";
 
 export const deleteFullTestingController = {
-  deleteFullBlogsAndPosts(dbBlogs: dbBlogsType, dbPosts: DBPostsType): void {
+  deleteFullBlogsAndPosts(dbBlogs: dbBlogsType, dbPosts: dbPostsType): void {
     dbBlogs.blogs = [];
     dbPosts.posts = [];
   },

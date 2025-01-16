@@ -7,9 +7,9 @@ export type PostsType = {
   blogName: string;
 };
 
-export type DBPostsType = { posts: PostsType[] };
+export type dbPostsType = { posts: PostsType[] };
 
-export const dbPosts: DBPostsType = {
+export const dbPosts: dbPostsType = {
   posts: [
     {
       id: "post-1",
