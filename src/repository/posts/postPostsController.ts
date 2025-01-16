@@ -8,7 +8,7 @@ export const postPostsController = {
     blogId: string
   ): PostsType {
     const createdPost = {
-      id: Number(new Date()),
+      id: String(new Date()),
       title: title,
       shortDescription: shortDescription,
       content: content,
