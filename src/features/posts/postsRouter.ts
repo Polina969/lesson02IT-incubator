@@ -14,6 +14,7 @@ import { deletePostByIDController } from "./postsControllers/deletePostsByIDCont
 import { postsShema } from "./postsShems";
 import { inputCheckErrorsMiddleware } from "../../middlewares/valdate-request-shema";
 import { RequestWithParamsAndReqBody, RequestWithReqBody } from "../../types";
+import { PostInputModel } from "../../types/postsTypes";
 
 export const PostsRouter = (dbPosts: dbPostsType) => {
   const postRouter = express.Router();
@@ -35,7 +36,10 @@ export const PostsRouter = (dbPosts: dbPostsType) => {
     "/",
     postsShema,
     inputCheckErrorsMiddleware,
-    (req: Request, res: Response) => {
+    (
+      req: RequestWithReqBody<PostInputModel>,
+      res: Response<PostInputModel>
+    ) => {
       try {
         const createdPost: PostsType = postPostsController.createPost(
           req.body.title,
@@ -45,9 +49,8 @@ export const PostsRouter = (dbPosts: dbPostsType) => {
         ); // импорт к репозиторию
         res.status(HTTP_STATUSES.CREATED_201).json(createdPost);
       } catch (error: any) {
-        res
-          .status(HTTP_STATUSES.BAD_REQUEST_400)
-          .send({ message: error.message });
+        res.status(HTTP_STATUSES.BAD_REQUEST_400);
+        //.send({ message: error.message });
       }
     }
   );

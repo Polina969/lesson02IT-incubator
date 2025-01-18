@@ -6,6 +6,7 @@ import {
 } from "express-validator";
 import express, { Request, Response, NextFunction } from "express";
 import { validate as validateUUID } from "uuid"; //для проверки uuid
+import { dbBlogs } from "../../db/dbBlogs";
 
 export const postsShema = [
   body("title")
@@ -23,6 +24,16 @@ export const postsShema = [
     .isLength({ min: 1, max: 1000 })
     .notEmpty()
     .withMessage("Максимальная name длина 15"),
+  body("blogId")
+    .isString()
+    .withMessage("not string")
+    .trim()
+    .custom((blogId) => {
+      const blog = dbBlogs.blogs.find((b) => b.id === blogId);
+      // console.log(blog)
+      return !!blog;
+    })
+    .withMessage("no blog"),
   // body("id").custom(validateImmutableField("id")), // Используем кастомный валидатор для свойства id
   // body("blogId").custom(validateImmutableField("blogId")),
 ];

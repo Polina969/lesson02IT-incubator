@@ -10,6 +10,13 @@ import { adminMiddleware } from "../../middlewares/middlewares";
 import { validationResult, ValidationError, body } from "express-validator";
 import { bodyShema } from "./blogShems";
 import { inputCheckErrorsMiddleware } from "../../middlewares/valdate-request-shema";
+import {
+  RequestWithParamsAndReqBody,
+  RequestWithQuery,
+  RequestWithReqBody,
+  RequestWithResBody,
+} from "../../types";
+import { BlogInputModel } from "../../types/blogsTypes";
 
 export const VersionRouter = () => {
   const versionRouter = express.Router();
@@ -41,7 +48,10 @@ export const BlogsRouter = (dbBlogs: dbBlogsType) => {
     "/",
     bodyShema,
     inputCheckErrorsMiddleware,
-    (req: Request, res: Response): void => {
+    (
+      req: RequestWithReqBody<BlogInputModel>,
+      res: Response<BlogInputModel>
+    ): void => {
       try {
         const createdBlog: BlogsType = postsBlogsController.createBlog(
           req.body.name,
@@ -50,9 +60,8 @@ export const BlogsRouter = (dbBlogs: dbBlogsType) => {
         ); // импорт к репозиторию
         res.status(HTTP_STATUSES.CREATED_201).json(createdBlog);
       } catch (error: any) {
-        res
-          .status(HTTP_STATUSES.BAD_REQUEST_400)
-          .send({ message: error.message });
+        res.status(HTTP_STATUSES.BAD_REQUEST_400);
+        // .send({ message: error.message });
       }
     }
   );
@@ -60,7 +69,10 @@ export const BlogsRouter = (dbBlogs: dbBlogsType) => {
     "/:id",
     bodyShema,
     inputCheckErrorsMiddleware,
-    (req: Request, res: Response): void => {
+    (
+      req: RequestWithParamsAndReqBody<{ id: string }, BlogInputModel>,
+      res: Response
+    ): void => {
       const blogIndex = dbBlogs.blogs.findIndex((v) => v.id === req.params.id);
 
       if (blogIndex === -1) {
