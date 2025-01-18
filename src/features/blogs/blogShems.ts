@@ -1,16 +1,19 @@
 import { validationResult, ValidationError, body } from "express-validator";
 
-export const postsShema = [
-  body("title")
+export const bodyShema = [
+  body("name")
     .trim()
-    .isLength({ min: 1, max: 30 })
+    .isLength({ min: 1, max: 15 })
+    .notEmpty()
     .withMessage("Максимальная name длина 15"),
-  body("shortDescription")
+  body("description")
+    .trim()
+    .isLength({ min: 1, max: 500 })
+    .notEmpty()
+    .withMessage("Максимальная name длина 15"),
+  body("websiteUrl")
     .trim()
     .isLength({ min: 1, max: 100 })
-    .withMessage("Максимальная name длина 15"),
-  body("content")
-    .trim()
-    .isLength({ min: 1, max: 1000 })
+    .isURL()
     .withMessage("Максимальная name длина 15"),
 ];

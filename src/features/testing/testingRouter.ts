@@ -1,8 +1,8 @@
 import express, { Request, Response, Router } from "express";
-import { HTTP_STATUSES } from "../utils";
-import { deleteFullTestingController } from "../repository/testing/deleteFullTestingController";
-import { dbBlogs, dbBlogsType } from "../db/dbBlogs";
-import { dbPosts, dbPostsType } from "../db/dbPosts";
+import { HTTP_STATUSES } from "../../utils";
+import { deleteFullTestingController } from "./testingControllers/deleteFullTestingController";
+import { dbBlogs, dbBlogsType } from "../../db/dbBlogs";
+import { dbPosts, dbPostsType } from "../../db/dbPosts";
 
 export const deleteTestsRouter = () => {
   const testingRouter = express.Router();

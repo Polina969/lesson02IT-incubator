@@ -1,9 +1,9 @@
-import { BlogsType, dbBlogs } from "../../db/dbBlogs";
-import { HTTP_STATUSES } from "../../utils";
+import { BlogsType, dbBlogs } from "../../../db/dbBlogs";
+import { HTTP_STATUSES } from "../../../utils";
 
 export const putBlogsByIDController = {
   updateBlog(
-    id: string | number,
+    id: string,
     name: string,
     description: string,
     websiteUrl: string

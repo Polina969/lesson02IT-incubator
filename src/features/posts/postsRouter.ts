@@ -1,14 +1,19 @@
-import { PostsType, dbPosts, dbPostsType } from "../db/dbPosts";
+import { PostsType, dbPosts, dbPostsType } from "../../db/dbPosts";
 import express, { Request, Response } from "express";
-import { HTTP_STATUSES } from "../utils";
-import { authMiddleware } from "../middlewares/middlewares";
-import { getPostsController } from "../repository/posts/getPostsController";
-import { getPostsByIDController } from "../repository/posts/getPostsByIDController";
-import { postPostsController } from "../repository/posts/postPostsController";
-import { putPostController } from "../repository/posts/putPostsByIDController";
-import { deletePostByIDController } from "../repository/posts/deletePostsByIDController";
-import { postsShema } from "../shema/putShems";
-import { validateRequestSchema } from "../middlewares/valdate-request-shema";
+import { HTTP_STATUSES } from "../../utils";
+import { adminMiddleware } from "../../middlewares/middlewares";
+import { getPostsController } from "./postsControllers/getPostsController";
+import { getPostsByIDController } from "./postsControllers/getPostsByIDController";
+import { postPostsController } from "./postsControllers/postPostsController";
+import {
+  MyObject,
+  putPostController,
+  UpdatePostRequest,
+} from "./postsControllers/putPostsByIDController";
+import { deletePostByIDController } from "./postsControllers/deletePostsByIDController";
+import { postsShema } from "./postsShems";
+import { inputCheckErrorsMiddleware } from "../../middlewares/valdate-request-shema";
+import { RequestWithParamsAndReqBody, RequestWithReqBody } from "../../types";
 
 export const PostsRouter = (dbPosts: dbPostsType) => {
   const postRouter = express.Router();
@@ -25,11 +30,11 @@ export const PostsRouter = (dbPosts: dbPostsType) => {
       res.status(200).json(post);
     }
   });
-  postRouter.use(authMiddleware);
+  postRouter.use(adminMiddleware);
   postRouter.post(
     "/",
     postsShema,
-    validateRequestSchema,
+    inputCheckErrorsMiddleware,
     (req: Request, res: Response) => {
       try {
         const createdPost: PostsType = postPostsController.createPost(
@@ -49,19 +54,23 @@ export const PostsRouter = (dbPosts: dbPostsType) => {
   postRouter.put(
     "/:id",
     postsShema,
-    validateRequestSchema,
-    (req: Request, res: Response): void => {
-      const videoIndex = dbPosts.posts.findIndex((v) => v.id === req.params.id);
+    inputCheckErrorsMiddleware,
+    (
+      req: RequestWithParamsAndReqBody<MyObject, UpdatePostRequest>,
+      res: Response
+    ): void => {
+      const postIndex = dbPosts.posts.findIndex((v) => v.id === req.params.id);
 
-      if (videoIndex === -1) {
+      if (postIndex === -1) {
         res.sendStatus(404); // 404, если видео с таким id не найдено
         return;
       }
+      const { title, shortDescription, content } = req.body;
       const putPost = putPostController.updatePost(
         req.params.id,
-        req.body.title,
-        req.body.shortDescription,
-        req.body.content
+        title,
+        shortDescription,
+        content
       ); // импорт к репозиторию
       res.status(HTTP_STATUSES.NO_CONTENT_204).json(putPost);
     }

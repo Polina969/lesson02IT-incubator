@@ -6,7 +6,7 @@ import { Request, Response } from "express";
 // АУТЕНДИФИКАЦИЯ
 export const ADMIN_AUTH = "admin:qwerty"; // get from SETTINGS
 //export const ADMIN_AUTH = "Authorization:Basic YWRtaW46cXdlcnR5"; // get from SETTINGS
-export const authMiddleware = (
+export const adminMiddleware = (
   req: Request,
   res: Response,
   next: NextFunction

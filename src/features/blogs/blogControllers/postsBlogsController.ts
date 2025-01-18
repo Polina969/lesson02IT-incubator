@@ -1,5 +1,5 @@
-import { BlogsType } from "../../db/dbBlogs";
-import { dbBlogs } from "../../db/dbBlogs";
+import { BlogsType } from "../../../db/dbBlogs";
+import { dbBlogs } from "../../../db/dbBlogs";
 import { v4 as uuidv4 } from "uuid";
 
 export const postsBlogsController = {

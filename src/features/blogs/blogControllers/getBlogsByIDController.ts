@@ -1,4 +1,4 @@
-import { dbBlogs } from "../../db/dbBlogs";
+import { dbBlogs } from "../../../db/dbBlogs";
 
 export const getBlogsByIDController = {
   findIDBlog(id: string) {

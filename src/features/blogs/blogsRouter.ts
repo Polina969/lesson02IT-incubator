@@ -1,15 +1,15 @@
-import { BlogsType, dbBlogs, dbBlogsType } from "../db/dbBlogs";
-import { postsBlogsController } from "../repository/blogs/postsBlogsController";
+import { BlogsType, dbBlogs, dbBlogsType } from "../../db/dbBlogs";
+import { postsBlogsController } from "./blogControllers/postsBlogsController";
 import express, { Request, Response } from "express";
-import { HTTP_STATUSES } from "../utils";
-import { putBlogsByIDController } from "../repository/blogs/putBlogsByIDController";
-import { getBlogsController } from "../repository/blogs/getBlogsControlleer";
-import { getBlogsByIDController } from "../repository/blogs/getBlogsByIDController";
-import { deleteBlogsByIDController } from "../repository/blogs/deleteBlogsByIDController";
-import { authMiddleware } from "../middlewares/middlewares";
+import { HTTP_STATUSES } from "../../utils";
+import { putBlogsByIDController } from "./blogControllers/putBlogsByIDController";
+import { getBlogsController } from "./blogControllers/getBlogsControlleer";
+import { getBlogsByIDController } from "./blogControllers/getBlogsByIDController";
+import { deleteBlogsByIDController } from "./blogControllers/deleteBlogsByIDController";
+import { adminMiddleware } from "../../middlewares/middlewares";
 import { validationResult, ValidationError, body } from "express-validator";
-import { bodyShema } from "../shema/bodyShems";
-import { validateRequestSchema } from "../middlewares/valdate-request-shema";
+import { bodyShema } from "./blogShems";
+import { inputCheckErrorsMiddleware } from "../../middlewares/valdate-request-shema";
 
 export const VersionRouter = () => {
   const versionRouter = express.Router();
@@ -36,11 +36,11 @@ export const BlogsRouter = (dbBlogs: dbBlogsType) => {
       res.status(200).json(video);
     }
   });
-  blogRouter.use(authMiddleware);
+  blogRouter.use(adminMiddleware);
   blogRouter.post(
     "/",
     bodyShema,
-    validateRequestSchema,
+    inputCheckErrorsMiddleware,
     (req: Request, res: Response): void => {
       try {
         const createdBlog: BlogsType = postsBlogsController.createBlog(
@@ -59,14 +59,15 @@ export const BlogsRouter = (dbBlogs: dbBlogsType) => {
   blogRouter.put(
     "/:id",
     bodyShema,
-    validateRequestSchema,
+    inputCheckErrorsMiddleware,
     (req: Request, res: Response): void => {
-      const videoIndex = dbBlogs.blogs.findIndex((v) => v.id === req.params.id);
+      const blogIndex = dbBlogs.blogs.findIndex((v) => v.id === req.params.id);
 
-      if (videoIndex === -1) {
+      if (blogIndex === -1) {
         res.sendStatus(404); // 404, если видео с таким id не найдено
         return;
       }
+
       const putCours = putBlogsByIDController.updateBlog(
         req.params.id,
         req.body.name,

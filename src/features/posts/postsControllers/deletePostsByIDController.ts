@@ -1,4 +1,4 @@
-import { dbPosts } from "../../db/dbPosts";
+import { dbPosts } from "../../../db/dbPosts";
 
 export const deletePostByIDController = {
   deleteIDPost(id: string) {

@@ -1,4 +1,4 @@
-import { PostsType, dbPosts } from "../../db/dbPosts";
+import { PostsType, dbPosts } from "../../../db/dbPosts";
 import { v4 as uuidv4 } from "uuid";
 
 export const postPostsController = {

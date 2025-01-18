@@ -1,6 +1,18 @@
-import { dbPosts } from "../../db/dbPosts";
-import { HTTP_STATUSES } from "../../utils";
+import { dbPosts } from "../../../db/dbPosts";
+import { HTTP_STATUSES } from "../../../utils";
 
+export interface MyObject {
+  [key: string]: any; // or id?: string;
+}
+// export interface UpdatePostRequest {
+//   title: string;
+//   shortDescription: string;
+//   content: string;
+// }
+export type UpdatePostRequest = Record<
+  "title" | "shortDescription" | "content",
+  string
+>;
 export const putPostController = {
   updatePost(
     id: string | number,
